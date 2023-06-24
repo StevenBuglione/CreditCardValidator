@@ -1,0 +1,21 @@
+{
+  "name": "credit-card-validation",
+  "version": "1.0.0",
+  "description": "Example TypeScript Credit Card Validation Class",
+  "main": "src/main.ts",
+  "scripts": {
+    "test": "mocha -r ts-node/register 'test/**/*.test.ts'",
+    "start": "node main.ts"
+  },
+  "author": "Steven Buglione",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/jest": "^29.5.2",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.3.1",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "ts-node": "^10.9.1"
+  }
+}
