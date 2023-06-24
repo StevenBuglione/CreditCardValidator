@@ -1,0 +1,81 @@
+card-type:
+  cards:
+    - name: amex
+      range: 34,37
+      valid-length:
+        - 15
+    - name: diners_club_carte_blanche
+      range: 300-305
+      valid-length:
+        - 16
+        - 17
+        - 18
+        - 19
+    - name: diners_club_international
+      range: 3095,36,38-39
+      valid-length:
+        - 14
+        - 15
+        - 16
+        - 17
+        - 18
+        - 19
+    - name: jcb
+      range: 3088-3094,3096-3102,3112-3120,3158-3159,3337-3349,3528-3589
+      valid-length:
+        - 16
+    - name: laser
+      range: 6304,6706,6709,6771
+      valid-length:
+        - 16
+        - 17
+        - 18
+        - 19
+    - name: visa_electron
+      range: 4026,417500,4508,4844,4913,4917
+      valid-length:
+        - 16
+    - name: visa
+      range: 4
+      valid-length:
+        - 13
+        - 14
+        - 15
+        - 16
+        - 17
+        - 18
+        - 19
+    - name: mastercard
+      range: 51-55,2221-2720
+      valid-length:
+        - 16
+    - name: discover
+      range: 6011,622126-622925,644-649,65
+      valid-length:
+        - 16
+        - 17
+        - 18
+        - 19
+    - name: dankort
+      range: 5019
+      valid-length:
+        - 16
+    - name: maestro
+      range: 50,56-69
+      valid-length:
+        - 12
+        - 13
+        - 14
+        - 15
+        - 16
+        - 17
+        - 18
+        - 19
+    - name: uatp
+      range: 1
+      valid-length:
+        - 15
+    - name: mir
+      range: 2200-2204
+      valid-length:
+        - 16
