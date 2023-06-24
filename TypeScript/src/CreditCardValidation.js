@@ -1,23 +1,9 @@
-import * as readline from 'readline';
-
-
-export interface CardType {
-    name: string;
-    range: string;
-    valid_length: number[];
-}
-
-export interface ValidationResult {
-    cardType: CardType | undefined;
-    valid: boolean;
-    luhn_valid: boolean;
-    length_valid: boolean;
-}
-
-export class CreditCardValidator {
-    private cardTypes: CardType[];
-
-    constructor() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CreditCardValidator = void 0;
+var readline = require("readline");
+var CreditCardValidator = /** @class */ (function () {
+    function CreditCardValidator() {
         this.cardTypes = [
             {
                 name: 'amex',
@@ -86,47 +72,48 @@ export class CreditCardValidator {
             }
         ];
     }
-    
-    private getCardType(number: string): CardType | undefined {
-        return this.cardTypes.find(cardType => {
-            const ranges = cardType.range.split(',').map(part => {
+    CreditCardValidator.prototype.getCardType = function (number) {
+        var _a;
+        return (_a = this.cardTypes.find(function (cardType) {
+            var ranges = cardType.range.split(',').map(function (part) {
                 if (part.includes('-')) {
-                    const [start, end] = part.split('-').map(Number);
-                    return Array.from({length: end - start + 1}, (_, i) => start + i);
+                    var _a = part.split('-').map(Number), start_1 = _a[0], end = _a[1];
+                    return Array.from({ length: end - start_1 + 1 }, function (_, i) { return start_1 + i; });
                 }
                 return [Number(part)];
             }).flat();
-            return ranges.some(rangeValue => number.startsWith(rangeValue.toString()));
-        }) ?? undefined;
-    }
-
-    private isValidLuhn(number: string): boolean {
-        const sum = number.split('').reverse().reduce((sum, digit, index) => {
-            let num = Number(digit);
+            return ranges.some(function (rangeValue) { return number.startsWith(rangeValue.toString()); });
+        })) !== null && _a !== void 0 ? _a : undefined;
+    };
+    CreditCardValidator.prototype.isValidLuhn = function (number) {
+        var sum = number.split('').reverse().reduce(function (sum, digit, index) {
+            var num = Number(digit);
             if (index % 2) {
                 num *= 2;
                 if (num < 10) {
                     return sum + num;
-                } else {
+                }
+                else {
                     return sum + num - 9;
                 }
-            } else {
+            }
+            else {
                 return sum + num;
             }
         }, 0);
         return sum % 10 === 0;
-    }
-
-    private isValidLength(number: string, cardType: CardType): boolean {
-        return cardType.valid_length.includes(number.length);;
-    }
-
-    public validateCardNumber(number: string): { cardType: CardType | undefined; valid: boolean; luhn_valid: boolean; length_valid: boolean } {
-        const cardType = this.getCardType(number);
-        let luhnValid = this.isValidLuhn(number);
-        let lengthValid = false;
+    };
+    CreditCardValidator.prototype.isValidLength = function (number, cardType) {
+        return cardType.valid_length.includes(number.length);
+        ;
+    };
+    CreditCardValidator.prototype.validateCardNumber = function (number) {
+        var cardType = this.getCardType(number);
+        var luhnValid = this.isValidLuhn(number);
+        var lengthValid = false;
         if (cardType != null) {
             lengthValid = this.isValidLength(number, cardType);
+            luhnValid = this.isValidLuhn(number);
         }
         return {
             cardType: cardType,
@@ -134,37 +121,32 @@ export class CreditCardValidator {
             luhn_valid: luhnValid,
             length_valid: lengthValid
         };
-    }
-
-
-    public validate(number: string, callback: (result: ValidationResult) => void): void {
+    };
+    CreditCardValidator.prototype.validate = function (number, callback) {
         number = number.replace(/[ -]/g, '');
-        const validationResult = this.validateCardNumber(number);
-        if (callback) callback(validationResult);
-    }
-
-   public bindValidation(callback: (result: ValidationResult) => void): void {
+        var validationResult = this.validateCardNumber(number);
+        if (callback)
+            callback(validationResult);
+    };
+    CreditCardValidator.prototype.bindValidation = function (callback) {
+        var _this = this;
         readline.emitKeypressEvents(process.stdin);
         if (process.stdin.setRawMode) {
             process.stdin.setRawMode(true);
         }
-
-        let cardNumber = '';
-
-        process.stdin.on('data', (input) => {
-            const str = input.toString().trim();
-
+        var cardNumber = '';
+        process.stdin.on('data', function (input) {
+            var str = input.toString().trim();
             // Exit the process when 'c' is pressed with control key
             if (str === '\u0003') {
                 process.exit();
             }
-
             // Build the card number from input and validate
             cardNumber += str;
-            this.validate(cardNumber, callback);
+            _this.validate(cardNumber, callback);
         });
-    }
-    
-}
-
-const cardValidator = new CreditCardValidator();
+    };
+    return CreditCardValidator;
+}());
+exports.CreditCardValidator = CreditCardValidator;
+var cardValidator = new CreditCardValidator();

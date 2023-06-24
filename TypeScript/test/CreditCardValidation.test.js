@@ -1,18 +1,11 @@
-import { expect } from 'chai';
-import {CreditCardValidator, ValidationResult} from "../src/CreditCardValidation";
-
-
-interface TestCard {
-    type: string | undefined;
-    number: string;
-    invalidLuhn?: boolean;
-    invalidLength?: boolean;
-}
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var chai_1 = require("chai");
+var CreditCardValidation_1 = require("../src/CreditCardValidation");
 // @ts-ignore
 // @ts-ignore
-describe('CreditCardValidator', () => {
-    const cards: TestCard[] = [
+describe('CreditCardValidator', function () {
+    var cards = [
         {
             type: "amex",
             number: "378282246310005"
@@ -186,18 +179,15 @@ describe('CreditCardValidator', () => {
             invalidLength: true,
         }
     ];
-
-
-
-    const creditCardValidator = new CreditCardValidator();
-
-    cards.forEach(card => {
-        it(`Card number ${card.number}`, () => {
-            const result: ValidationResult = creditCardValidator.validateCardNumber(card.number);
-            expect(result.cardType?.name).to.equal(card.type);
-            expect(result.luhn_valid).to.equal(!card.invalidLuhn);
-            expect(result.length_valid).to.equal(!card.invalidLength);
-            expect(result.valid).to.equal(!card.invalidLuhn && !card.invalidLength);
+    var creditCardValidator = new CreditCardValidation_1.CreditCardValidator();
+    cards.forEach(function (card) {
+        it("Card number ".concat(card.number), function () {
+            var _a;
+            var result = creditCardValidator.validateCardNumber(card.number);
+            (0, chai_1.expect)((_a = result.cardType) === null || _a === void 0 ? void 0 : _a.name).to.equal(card.type);
+            (0, chai_1.expect)(result.luhn_valid).to.equal(!card.invalidLuhn);
+            (0, chai_1.expect)(result.length_valid).to.equal(!card.invalidLength);
+            (0, chai_1.expect)(result.valid).to.equal(!card.invalidLuhn && !card.invalidLength);
         });
     });
 });
